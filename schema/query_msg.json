@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QueryMsg",
+  "anyOf": [
+    {
+      "description": "displays the public metadata of a token",
+      "type": "object",
+      "required": [
+        "nft_info"
+      ],
+      "properties": {
+        "nft_info": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "token_id": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "displays the private metadata if permitted to view it",
+      "type": "object",
+      "required": [
+        "private_metadata"
+      ],
+      "properties": {
+        "private_metadata": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "token_id": {
+              "type": "string"
+            },
+            "viewer": {
+              "description": "optional address and key requesting to view the private metadata",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ViewerInfo"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "HumanAddr": {
+      "type": "string"
+    },
+    "ViewerInfo": {
+      "description": "the address and viewing key making an authenticated query request",
+      "type": "object",
+      "required": [
+        "address",
+        "viewing_key"
+      ],
+      "properties": {
+        "address": {
+          "description": "querying address",
+          "allOf": [
+            {
+              "$ref": "#/definitions/HumanAddr"
+            }
+          ]
+        },
+        "viewing_key": {
+          "description": "authentication key string",
+          "type": "string"
+        }
+      }
+    }
+  }
+}
